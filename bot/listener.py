@@ -1,4 +1,5 @@
 import settings
+import handlers.start
 from aiogram import Bot, Dispatcher, executor, types
 
 
@@ -10,7 +11,7 @@ dp = Dispatcher(bot)
 # Handlers
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
-    await message.reply('Sei stato contagiatto 😼')
+    await handlers.start.handle(message)
 
 
 @dp.message_handler(commands=['victims'])
