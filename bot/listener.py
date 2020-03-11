@@ -29,6 +29,11 @@ async def forgetaboutme_handler(message: types.Message):
     await message.reply("Don't you, forget about me \nDon't, don't, don't, don't  😿")
 
 
+@dp.message_handler(commands=['help'])
+async def forgetaboutme_handler(message: types.Message):
+    await message.reply('Hey ciao, sono PandeMiao, un progetto tutto open che simula il propagarsi di una epidemia. Se vuoi sapere come sono fatto puoi trovare il mio codice su https://github.com/rage-against-the-data/PandeMiao/')
+
+
 # Polling
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
