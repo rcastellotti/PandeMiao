@@ -1,7 +1,7 @@
-[![kitto linter](https://github.com/rage-against-the-data/PandeMiao/workflows/Python%20application/badge.svg)](https://github.com/rage-against-the-data/PandeMiao/actions?workflow=kitto+linter)
-
 # PandeMiao
 Gotta kill 'em all
+
+Status (CI): [![Kitto linter](https://github.com/rage-against-the-data/PandeMiao/workflows/Python%20application/badge.svg)](https://github.com/rage-against-the-data/PandeMiao/actions?workflow=kitto+linter)
 
 ## Come usarlo
 1. Crea un bot su Telegram
