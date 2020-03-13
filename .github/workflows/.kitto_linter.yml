@@ -1,4 +1,4 @@
-name: kitto linter
+name: kitto_linter
 
 on:
   push:

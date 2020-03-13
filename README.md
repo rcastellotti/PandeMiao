@@ -2,7 +2,7 @@
 Gotta kill 'em all
 
 Status (CI): 
-[![Kitto linter](https://github.com/rage-against-the-data/PandeMiao/workflows/kitto%20linter/badge.svg)](https://github.com/rage-against-the-data/PandeMiao/actions?workflow=kitto+linter)
+[![Kitto linter](https://github.com/rage-against-the-data/PandeMiao/workflows/kitto%20linter/badge.svg)](https://github.com/rage-against-the-data/PandeMiao/actions?workflow=kitto_linter)
 
 ## Come usarlo
 1. Crea un bot su Telegram
