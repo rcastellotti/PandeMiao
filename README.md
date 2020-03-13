@@ -1,4 +1,4 @@
-[![kitto linter](https://github.com/rcastellotti/PandeMiao/workflows/Python%20application/badge.svg)](https://github.com/rcastellotti/PandeMiao/actions?workflow=kitto+linter)
+[![kitto linter](https://github.com/rage-against-the-data/PandeMiao/workflows/Python%20application/badge.svg)](https://github.com/rage-against-the-data/PandeMiao/actions?workflow=kitto+linter)
 
 # PandeMiao
 Gotta kill 'em all
