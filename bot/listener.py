@@ -26,12 +26,18 @@ async def dumpmydata_handler(message: types.Message):
 
 @dp.message_handler(commands=['forgetaboutme'])
 async def forgetaboutme_handler(message: types.Message):
-    await message.reply("Don't you, forget about me \nDon't, don't, don't, don't  😿")
+    await message.reply("Don't you, forget about me \n"
+                        "Don't, don't, don't, don't  😿")
 
 
 @dp.message_handler(commands=['help'])
-async def forgetaboutme_handler(message: types.Message):
-    await message.reply('Hey ciao, sono PandeMiao, un progetto tutto open che simula il propagarsi di una epidemia. Se vuoi sapere come sono fatto puoi trovare il mio codice su https://github.com/rage-against-the-data/PandeMiao/')
+async def help_handler(message: types.Message):
+    await message.reply('Hey ciao! Sono PandeMiao, '
+                        'un progetto tutto open '
+                        'che simula il propagarsi di una epidemia. '
+                        'Se vuoi sapere come sono fatto '
+                        'puoi trovare il mio codice su '
+                        'https://github.com/rage-against-the-data/PandeMiao/')
 
 
 # Polling

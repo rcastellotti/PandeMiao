@@ -1,4 +1,4 @@
-from aiogram import Bot, types
+from aiogram import types
 
 
 async def handle(message: types.Message):

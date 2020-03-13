@@ -5,7 +5,9 @@ from aiogram import Bot, Dispatcher, executor
 
 
 async def daily_update():
-    await antiflood.send_message(bot, settings.ADMIN_USER_ID, 'Cron job started')
+    await antiflood.send_message(bot,
+                                 settings.ADMIN_USER_ID,
+                                 'Cron job started')
 
     # Notify all users
     for i in range(2):
