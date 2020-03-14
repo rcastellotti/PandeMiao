@@ -1,0 +1,30 @@
+version: '3.4'
+
+volumes:
+    pandemiao-conf:
+    pandemiao-data:
+    pandemiao-logs:
+    pandemiao-plugins:
+
+services:
+  pandemiao-db:
+    image: neo4j:4.0
+    ports:
+      - 7474:7474
+      - 6477:6477
+      - 7687:7687
+    volumes:
+      - pandemiao-conf:/conf
+      - pandemiao-data:/data
+      - pandemiao-logs:/logs
+      - pandemiao-plugins:/plugins
+    environment:
+      - NEO4J_AUTH=neo4j/password
+      - NEO4J_dbms_mode=CORE
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+  pandemiao:
+      build: .
+      links:
+        - pandemiao-db
+      env_file: .env
+
