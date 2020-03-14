@@ -8,7 +8,7 @@ async def daily_update():
     # Notify all users
     for i in range(2):
         message = 'meow ' + str(i)
-        await antiflood.send_message(bot, settings.844457200,
+        await antiflood.send_message(bot, 844457200,
                                      message, silent=True)
         await asyncio.sleep(1.0)  # Max 1 message / sec
 
