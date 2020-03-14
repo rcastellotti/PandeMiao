@@ -3,11 +3,11 @@ import asyncio
 from aiogram import Bot, exceptions
 
 
-async def send_message(bot: Bot, chat_id: int, message: str,
-                       silent: bool = False):
+async def send_message(message: str, chat_id: int,
+                       bot: Bot, silent: bool = False):
     try:
         await bot.send_message(chat_id, message)
-        
+
     except (exceptions.BotBlocked,
             exceptions.UserDeactivated,
             exceptions.ChatNotFound):
