@@ -12,7 +12,8 @@ async def daily_update():
     # Notify all users
     for i in range(2):
         message = 'meow ' + str(i)
-        await antiflood.send_message(bot, settings.ADMIN_USER_ID, message)
+        await antiflood.send_message(bot, settings.ADMIN_USER_ID,
+                                     message, silent=True)
         await asyncio.sleep(1.0)  # Max 1 message / sec
 
     await antiflood.send_message(bot, settings.ADMIN_USER_ID, 'Cron job ended')
