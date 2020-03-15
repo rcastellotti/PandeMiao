@@ -3,11 +3,14 @@ import handlers.start
 from aiogram import Bot, Dispatcher, executor, types
 from neo4j import GraphDatabase
 
+import utils.dbmigration
+
 # Initialize db link
 db_auth = (settings.NEO4J_USERNAME, settings.NEO4J_PASSWORD)
 db = GraphDatabase.driver(settings.NEO4J_URI,
                           auth=db_auth,
                           encrypted=settings.NEO4J_ENCRYPTED)
+utils.dbmigration.migrate(db)
 
 # Initialize bot and dispatcher
 bot = Bot(token=settings.TELEGRAM_API_TOKEN)
