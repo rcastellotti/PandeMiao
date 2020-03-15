@@ -129,5 +129,4 @@ dmypy.json
 .pyre/
 
 # Configs
-bot/settings.py
 .vscode/settings.json
