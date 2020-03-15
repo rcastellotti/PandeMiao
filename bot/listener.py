@@ -1,9 +1,9 @@
 import settings
+import import utils.dbmigration
 import handlers.start
 from aiogram import Bot, Dispatcher, executor, types
 from neo4j import GraphDatabase
 
-import utils.dbmigration
 
 # Initialize db link
 db_auth = (settings.NEO4J_USERNAME, settings.NEO4J_PASSWORD)
