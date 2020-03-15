@@ -9,11 +9,6 @@ Status (CI):
 1. Crea un bot su Telegram
 2. Inserisci nella variabile `TELEGRAM_API_TOKEN` all'interno di `.env` il token che ti ha dato FatherBot
 
-### Come eseguirlo
-1. Esegui `pip install -r requirements.txt`
-2. Esegui `. .env`
-3. Metti il bot in ascolto: `python bot/listener.py`
-
 ### Come eseguirlo con docker-compose
 1. Esegui `docker-compose build`
 2. Esegui `docker-compose up`
