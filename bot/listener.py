@@ -1,5 +1,5 @@
 import settings
-import import utils.dbmigration
+import utils.dbmigration
 import handlers.start
 from aiogram import Bot, Dispatcher, executor, types
 from neo4j import GraphDatabase
