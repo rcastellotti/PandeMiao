@@ -8,7 +8,7 @@ volumes:
 
 services:
   pandemiao-db:
-    image: neo4j:4.0
+    image: neo4j:4.0.1
     ports:
       - 7474:7474
       - 6477:6477
@@ -23,8 +23,13 @@ services:
       - NEO4J_dbms_mode=CORE
       - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
   pandemiao:
-      build: .
-      links:
-        - pandemiao-db
-      env_file: .env
+    build: .
+    links:
+      - pandemiao-db
+    environment:
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=password
+      - NEO4J_URI=bolt://pandemiao-db
+      - NEO4J_ENCRYPTED=Off
+    env_file: .env
 
