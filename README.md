@@ -6,7 +6,8 @@ Status (CI):
 ## How-to
 ### Come configurarlo
 1. Crea un bot su Telegram
-2. Inserisci nella variabile d'ambiente `TELEGRAM_API_TOKEN` il token che ti ha dato FatherBot
+2. Crea una copia di `.env.example` chiamata `.env`
+3. Inserisci nella variabile d'ambiente `TELEGRAM_API_TOKEN` il token che ti ha dato FatherBot
 
 ### Come eseguirlo con docker-compose
 1. Esegui `docker-compose build`
