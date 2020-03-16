@@ -8,14 +8,23 @@ def migrate(db):
             all_constraints.append(row['name'])
             row = db_constraints.single()
 
-    if 'chat_id' not in all_constraints:
+    if 'chatID' not in all_constraints:
         with db.session() as session:
             session.run("""
-                        CREATE CONSTRAINT chat_id
+                        CREATE CONSTRAINT chatID
                         ON (n:Person)
-                        ASSERT n.chat_id IS UNIQUE
+                        ASSERT n.chatID IS UNIQUE
                         """)
-    constraints_to_keep.append('chat_id')
+    constraints_to_keep.append('chatID')
+
+    if 'referrer' not in all_constraints:
+        with db.session() as session:
+            session.run("""
+                        CREATE CONSTRAINT referrer
+                        ON (n:Person)
+                        ASSERT n.referrer IS UNIQUE
+                        """)
+    constraints_to_keep.append('referrer')
 
     db_constraints_to_drop = set(all_constraints) - set(constraints_to_keep)
     for constraint_name in db_constraints_to_drop:
