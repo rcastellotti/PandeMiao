@@ -2,7 +2,10 @@ def migrate(db):
     all_constraints = []
     constraints_to_keep = []
     with db.session() as session:
-        db_constraints = session.run('CALL db.constraints')
+        db_constraints = session.run("""
+                                     CALL db.constraints
+                                     YIELD name
+                                     """)
         row = db_constraints.single()
         while row:
             all_constraints.append(row['name'])
