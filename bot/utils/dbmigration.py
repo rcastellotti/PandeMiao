@@ -6,10 +6,9 @@ def migrate(db):
                                      CALL db.constraints
                                      YIELD name
                                      """)
-        row = db_constraints.single()
-        while row:
+
+        for row in iter(db_constraints.single, False):
             all_constraints.append(row['name'])
-            row = db_constraints.single()
 
     if 'chatID' not in all_constraints:
         with db.session() as session:
