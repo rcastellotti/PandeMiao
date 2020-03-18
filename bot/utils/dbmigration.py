@@ -1,5 +1,6 @@
 from neo4j import Driver, BoltStatementResult
 
+
 def migrate(db: Driver):
     constraints_to_keep = ['chatID', 'referrer']
 
@@ -10,7 +11,7 @@ def migrate(db: Driver):
                                      YIELD name
                                      """)
         all_constraints = db_constraints.value()
-    
+
     # Create new constraints
     for constraint_to_keep in constraints_to_keep:
         if constraint_to_keep not in all_constraints:
