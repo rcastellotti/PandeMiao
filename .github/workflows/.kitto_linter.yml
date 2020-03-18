@@ -21,9 +21,12 @@ jobs:
           python -m pip install --upgrade pip 
           pip install -r requirements.txt
 
-    - name: Purring and buying corn-flakes
-      run: pip install flake8
+    - name: Purring and buying statically typed corn-flakes
+      run: pip install flake8 mypy
       
     - name: Kitto is linting
       run: flake8 .
+
+    - name: Kitto is checking types
+      run: mypy bot/ --strict
     
