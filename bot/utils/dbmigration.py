@@ -1,7 +1,6 @@
 from neo4j import Driver, Record, BoltStatementResult
 
 def migrate(db: Driver):
-     = []
     constraints_to_keep = []
     with db.session() as session:
         db_constraints:BoltStatementResult = session.run("""
