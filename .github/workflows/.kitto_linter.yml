@@ -25,9 +25,6 @@ jobs:
       run: pip install flake8 mypy
       
     - name: Kitto is linting
-      run: flake8 .
+      run: flake8 . && mypy bot/ --strict
 
-    - name: Kitto is checking types
-      if: succeeded() || failed()
-      run: mypy bot/ --strict
     
