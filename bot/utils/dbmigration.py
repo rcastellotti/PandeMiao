@@ -8,7 +8,7 @@ def migrate(db):
                                      """)
 
         for row in iter(db_constraints.single, False):
-            all_constraints.append(row['name'])
+            all_constraints.append(row.value())
 
     if 'chatID' not in all_constraints:
         with db.session() as session:
