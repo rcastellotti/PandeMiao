@@ -1,4 +1,6 @@
-def migrate(db):
+from neo4j import Driver
+
+def migrate(db: Driver):
     all_constraints = []
     constraints_to_keep = []
     with db.session() as session:
