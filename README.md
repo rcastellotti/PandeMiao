@@ -1,6 +1,8 @@
 # PandeMiao
 Gotta kill 'em all
 
+Simula una pandemia: contagia gli altri finché sei malato e scopri quante persone sono state contagiate per colpa tua!
+
 Status (CI): 
 [![Kitto linter](https://github.com/rage-against-the-data/PandeMiao/workflows/kitto_linter/badge.svg)](https://github.com/rage-against-the-data/PandeMiao/actions?workflow=kitto_linter)
 ## How-to
