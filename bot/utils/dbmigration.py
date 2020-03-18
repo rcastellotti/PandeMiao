@@ -25,4 +25,4 @@ def migrate(db: Driver):
     db_constraints_to_drop = set(all_constraints) - set(constraints_to_keep)
     for constraint_name in db_constraints_to_drop:
         with db.session() as session:
-            session.run('DROP CONSTRAINT $c', c=constraint_name)
+            session.run('DROP CONSTRAINT ' + constraint_name)
