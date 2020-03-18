@@ -1,7 +1,7 @@
 from neo4j import Driver, BoltStatementResult
 
 
-def migrate(db: Driver):
+def migrate(db: Driver) -> None:
     constraints_to_keep = []
 
     # Get constraints on the DB

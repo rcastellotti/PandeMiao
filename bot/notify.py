@@ -4,7 +4,7 @@ import asyncio
 from aiogram import Bot, Dispatcher, executor
 
 
-async def daily_update():
+async def daily_update() -> None:
     # Notify all users
     for i in range(2):
         message = 'meow ' + str(i)
