@@ -28,5 +28,6 @@ jobs:
       run: flake8 .
 
     - name: Kitto is checking types
+      if: succeeded() || failed()
       run: mypy bot/ --strict
     
