@@ -1,16 +1,14 @@
-from neo4j import Driver
+from neo4j import Driver, Record, BoltStatementResult
 
 def migrate(db: Driver):
-    all_constraints = []
+     = []
     constraints_to_keep = []
     with db.session() as session:
-        db_constraints = session.run("""
+        db_constraints:BoltStatementResult = session.run("""
                                      CALL db.constraints
                                      YIELD name
                                      """)
-
-        for row in iter(db_constraints.single, False):
-            all_constraints.append(row.value())
+        all_constraints = db_constraints.value()
 
     if 'chatID' not in all_constraints:
         with db.session() as session:
