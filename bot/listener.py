@@ -18,28 +18,28 @@ dp = Dispatcher(bot)
 
 
 # Handlers
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start']) # type: ignore
 async def start_handler(message: types.Message) -> None:
     await handlers.start.handle(message)
 
 
-@dp.message_handler(commands=['victims'])
+@dp.message_handler(commands=['victims']) # type: ignore
 async def victims_handler(message: types.Message) -> None:
     await message.reply('Non hai ancora contagiatto nessuno 🐈')
 
 
-@dp.message_handler(commands=['dumpmydata'])
+@dp.message_handler(commands=['dumpmydata']) # type: ignore
 async def dumpmydata_handler(message: types.Message) -> None:
     await message.reply('Come pretendi un gatto conosca qualcosa di te? 😺')
 
 
-@dp.message_handler(commands=['forgetaboutme'])
+@dp.message_handler(commands=['forgetaboutme']) # type: ignore
 async def forgetaboutme_handler(message: types.Message) -> None:
     await message.reply("Don't you, forget about me \n"
                         "Don't, don't, don't, don't  😿")
 
 
-@dp.message_handler(commands=['help'])
+@dp.message_handler(commands=['help']) # type: ignore
 async def help_handler(message: types.Message) -> None:
     await message.reply('Hey ciao! Sono PandeMiao, '
                         'un progetto tutto open '
