@@ -1,12 +1,12 @@
-from neo4j import Driver, Session
+from neo4j import Driver, Session, Transaction
 from neobolt.exceptions import ConstraintError
 
 
 def set_infected(driver: Driver, chatID: int, name: str) -> str:
+    session: Session
     with driver.session() as session:
-        session: Session
 
-        def create_node(tx, chatID, name):
+        def create_node(tx: Transaction, chatID: int, name: str) -> str:
             query = """
                 CREATE (newUser:Person {
                     chatID: $chatID, name: $name,
@@ -16,17 +16,22 @@ def set_infected(driver: Driver, chatID: int, name: str) -> str:
                 })
                 RETURN newUser.referrer
             """
-            return tx.run(query, chatID=chatID, name=name).single().value()
+            result: str = tx.run(query, chatID=chatID,
+                                 name=name).single().value()
+            return result
 
-        def get_referrer(tx, chatID):
+        def get_referrer(tx: Transaction, chatID: int) -> str:
             query = """
                 MATCH (user:Person { chatID: $chatID })
                 RETURN user.referrer
             """
-            return tx.run(query, chatID=chatID).single().value()
+            result: str = tx.run(query, chatID=chatID).single().value()
+            return result
 
+        result: str
         try:
-            return session.write_transaction(create_node, chatID, name)
+            result = session.write_transaction(create_node, chatID, name)
         except ConstraintError:
             # The user already exist, just return its referrer
-            return session.read_transaction(get_referrer, chatID)
+            result = session.read_transaction(get_referrer, chatID)
+        return result
