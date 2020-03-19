@@ -1,7 +1,9 @@
 import settings
-import utils.dbmigration
-import handlers.start
+import utils.queries as queries
+import utils.dbmigration as dbmigration
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.dispatcher.filters.builtin import CommandStart
+from aiogram.utils.deep_linking import get_start_link
 from neo4j import GraphDatabase
 
 
@@ -10,7 +12,7 @@ db_auth = (settings.NEO4J_USERNAME, settings.NEO4J_PASSWORD)
 db = GraphDatabase.driver(settings.NEO4J_URI,
                           auth=db_auth,
                           encrypted=settings.NEO4J_ENCRYPTED)
-utils.dbmigration.migrate(db)
+dbmigration.migrate(db)
 
 # Initialize bot and dispatcher
 bot = Bot(token=settings.TELEGRAM_API_TOKEN)
@@ -20,7 +22,22 @@ dp = Dispatcher(bot)
 # Handlers
 @dp.message_handler(commands=['start'])  # type: ignore
 async def start_handler(message: types.Message) -> None:
-    await handlers.start.handle(message)
+    from_chatID = message.from_user.id
+    from_name = message.from_user.full_name
+    start_referrer = message.get_args()
+
+    if not start_referrer:
+        # Started from scratch
+        new_referrer = queries.set_infected(db, from_chatID, from_name)
+        start_link = await get_start_link(new_referrer)
+
+        await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
+                            'Hai 7 giorni per contagiare i tuoi (a)mici inviandogli questo link:\n' +
+                            start_link)
+    else:
+        # Someone infected you
+        raise NotImplementedError
+        # await message.reply('Sei stato contagiatto da {} 😼'.format('Luca'))
 
 
 @dp.message_handler(commands=['victims'])  # type: ignore
