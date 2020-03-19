@@ -2,7 +2,6 @@ import settings
 import utils.queries as queries
 import utils.dbmigration as dbmigration
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.utils.deep_linking import get_start_link
 from neo4j import GraphDatabase
 
@@ -32,7 +31,8 @@ async def start_handler(message: types.Message) -> None:
         start_link = await get_start_link(new_referrer)
 
         await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
-                            'Hai 7 giorni per contagiare i tuoi (a)mici inviandogli questo link:\n' +
+                            'Hai 7 giorni per contagiare i tuoi (a)mici ' +
+                            'inviandogli questo link:\n' +
                             start_link)
     else:
         # Someone infected you
