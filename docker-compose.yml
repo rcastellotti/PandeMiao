@@ -8,7 +8,9 @@ volumes:
 
 services:
   pandemiao-db:
-    image: neo4j:4.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile-db
     ports:
       - 7474:7474
       - 6477:6477

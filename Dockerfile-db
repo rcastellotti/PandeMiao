@@ -1,0 +1,7 @@
+FROM neo4j:4.0.1
+
+RUN mkdir /plugins
+RUN cd /plugins && wget https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/4.0.0.4/apoc-4.0.0.4-all.jar
+
+ENV NEO4J_apoc_export_file_enabled True
+ENV NEO4J_apoc_uuid_enabled True
