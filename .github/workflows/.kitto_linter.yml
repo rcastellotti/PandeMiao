@@ -24,7 +24,7 @@ jobs:
     - name: Purring and buying statically typed corn-flakes
       run: pip install flake8 mypy
       
-    - name: Kitto is linting and checking types, MIAO
+    - name: Kitto is linting and checking types
       run: flake8 . && mypy bot/ --strict
 
     
