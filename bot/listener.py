@@ -1,7 +1,8 @@
 import settings
+import logging
 import utils.queries as queries
 import utils.dbmigration as dbmigration
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, executor, types, exceptions
 from aiogram.utils.deep_linking import get_start_link
 from neo4j import GraphDatabase
 
@@ -31,10 +32,14 @@ async def start_handler(message: types.Message) -> None:
             db, from_chatID, start_referrer)
 
     start_link: str = await get_start_link(new_referrer)
-    await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
-                        'Hai 7 giorni per contagiare i tuoi (a)mici ' +
-                        'inviandogli questo link:\n' +
-                        start_link)
+
+    try:
+        await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
+                            'Hai 7 giorni per contagiare i tuoi (a)mici ' +
+                            'inviandogli questo link:\n' +
+                            start_link)
+    except exceptions.TelegramAPIError:
+        logging.exception(f'Target [ID:{from_chatID}]: Failed.')
 
 
 @dp.message_handler(commands=['victims'])  # type: ignore
