@@ -1,26 +1,18 @@
 import settings
 import logging
 import utils.queries as queries
-import utils.dbmigration as dbmigration
+from utils.dbinit import db_connect
 from aiogram import Bot, Dispatcher, executor, types, exceptions
 from aiogram.utils.deep_linking import get_start_link
-from neo4j import GraphDatabase
+from neo4j import Driver
 
 
-# Initialize db link
-db_auth = (settings.NEO4J_USERNAME, settings.NEO4J_PASSWORD)
-db = GraphDatabase.driver(settings.NEO4J_URI,
-                          auth=db_auth,
-                          encrypted=settings.NEO4J_ENCRYPTED)
-dbmigration.migrate(db)
+# Init the db
+db: Driver = db_connect(retry=5, wait_sec=5)
 
-# Initialize bot and dispatcher
+# Init bot and dispatcher
 bot = Bot(token=settings.TELEGRAM_API_TOKEN)
 dp = Dispatcher(bot)
-
-executor.start_polling(dp, skip_updates=False)
-
-db.close()
 
 
 # Handlers
@@ -70,3 +62,8 @@ async def help_handler(message: types.Message) -> None:
                         'Se vuoi sapere come sono fatto '
                         'puoi trovare il mio codice su '
                         'https://github.com/rage-against-the-data/PandeMiao/')
+
+
+# Wait messages and close the db at the end
+executor.start_polling(dp, skip_updates=False)
+db.close()
