@@ -38,8 +38,8 @@ async def start_handler(message: types.Message) -> None:
                             'Hai 7 giorni per contagiare i tuoi (a)mici ' +
                             'inviandogli questo link:\n' +
                             start_link)
-    except exceptions.TelegramAPIError:
-        logging.exception(f'Target [ID:{from_chatID}]: Failed.')
+    except exceptions.TelegramAPIError as e:
+        logging.exception(f'Target [ID:{from_chatID}]: {str(e)}.')
 
 
 @dp.message_handler(commands=['victims'])  # type: ignore

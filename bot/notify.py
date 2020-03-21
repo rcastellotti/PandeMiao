@@ -22,8 +22,8 @@ async def send_message(chat_id: int, message: str) -> None:
             exceptions.ChatNotFound):
         logging.debug(f'Target [ID:{chat_id}]: Impossible to reach him.')
 
-    except exceptions.TelegramAPIError:
-        logging.exception(f'Target [ID:{chat_id}]: Failed.')
+    except exceptions.TelegramAPIError as e:
+        logging.exception(f'Target [ID:{chat_id}]: {str(e)}.')
 
 
 # Initialize bot
