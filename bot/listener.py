@@ -18,6 +18,10 @@ dbmigration.migrate(db)
 bot = Bot(token=settings.TELEGRAM_API_TOKEN)
 dp = Dispatcher(bot)
 
+executor.start_polling(dp, skip_updates=False)
+
+db.close()
+
 
 # Handlers
 @dp.message_handler(commands=['start'])  # type: ignore
@@ -66,9 +70,3 @@ async def help_handler(message: types.Message) -> None:
                         'Se vuoi sapere come sono fatto '
                         'puoi trovare il mio codice su '
                         'https://github.com/rage-against-the-data/PandeMiao/')
-
-
-# Polling
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=False)
-    db.close()
