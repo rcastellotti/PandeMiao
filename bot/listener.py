@@ -22,22 +22,19 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=['start'])  # type: ignore
 async def start_handler(message: types.Message) -> None:
     from_chatID = message.from_user.id
-    from_name = message.from_user.full_name
     start_referrer = message.get_args()
 
     if not start_referrer:
-        # Started from scratch
-        new_referrer = queries.set_infected(db, from_chatID, from_name)
-        start_link = await get_start_link(new_referrer)
-
-        await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
-                            'Hai 7 giorni per contagiare i tuoi (a)mici ' +
-                            'inviandogli questo link:\n' +
-                            start_link)
+        new_referrer = queries.set_infected(db, from_chatID)
     else:
-        # Someone infected you
-        raise NotImplementedError
-        # await message.reply('Sei stato contagiatto da {} 😼'.format('Luca'))
+        new_referrer = queries.set_infected_from(
+            db, from_chatID, start_referrer)
+
+    start_link: str = await get_start_link(new_referrer)
+    await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
+                        'Hai 7 giorni per contagiare i tuoi (a)mici ' +
+                        'inviandogli questo link:\n' +
+                        start_link)
 
 
 @dp.message_handler(commands=['victims'])  # type: ignore

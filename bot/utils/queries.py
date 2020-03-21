@@ -1,37 +1,40 @@
-from neo4j import Driver, Session, Transaction
+from neo4j import Driver, Session, Transaction, BoltStatementResult
 from neobolt.exceptions import ConstraintError
+import utils.transactions as transactions
 
 
-def set_infected(driver: Driver, chatID: int, name: str) -> str:
+def set_infected(driver: Driver, chatID: int) -> str:
     session: Session
     with driver.session() as session:
-
-        def create_node(tx: Transaction, chatID: int, name: str) -> str:
-            query = """
-                CREATE (newUser:Person {
-                    chatID: $chatID, name: $name,
-                    referrer: apoc.create.uuid(), infectedFromDate: date(),
-                    infectedUntil: date(
-                        datetime({ epochmillis:timestamp()+1000*60*60*24*7 }))
-                })
-                RETURN newUser.referrer
-            """
-            result: str = tx.run(query, chatID=chatID,
-                                 name=name).single().value()
-            return result
-
-        def get_referrer(tx: Transaction, chatID: int) -> str:
-            query = """
-                MATCH (user:Person { chatID: $chatID })
-                RETURN user.referrer
-            """
-            result: str = tx.run(query, chatID=chatID).single().value()
-            return result
-
         result: str
         try:
-            result = session.write_transaction(create_node, chatID, name)
+            result = session.write_transaction(
+                transactions.create_node, chatID)
         except ConstraintError:
             # The user already exist, just return its referrer
-            result = session.read_transaction(get_referrer, chatID)
-        return result
+            result = session.read_transaction(
+                transactions.get_referrer, chatID)
+        finally:
+            return result
+
+
+def set_infected_from(driver: Driver, chatID: int, referrer: str) -> str:
+    session: Session
+    with driver.session() as session:
+        result: str
+        try:
+            result_st: BoltStatementResult = session.write_transaction(
+                transactions.create_node_from, chatID, referrer)
+
+            if result_st is None:
+                result: str = session.write_transaction(
+                    transactions.create_node, chatID)
+            else:
+                result: str = result_st.single().value()
+
+        except ConstraintError:
+            # The user already exist, just return its referrer
+            result: str = session.read_transaction(
+                transactions.get_referrer, chatID)
+        finally:
+            return result
