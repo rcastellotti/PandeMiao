@@ -28,14 +28,14 @@ def set_infected_from(driver: Driver, chatID: int, referrer: str) -> str:
 
             if result_st is None:
                 # If the referrer is not valid, just be the patient zero
-                result: str = session.write_transaction(
+                result = session.write_transaction(
                     transactions.create_node, chatID)
             else:
-                result: str = result_st.single().value()
+                result = result_st.single().value()
 
         except ConstraintError:
             # The user already exist, just return its referrer
-            result: str = session.read_transaction(
+            result = session.read_transaction(
                 transactions.get_referrer, chatID)
         finally:
             return result
