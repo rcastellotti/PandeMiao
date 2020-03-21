@@ -4,6 +4,11 @@ import logging
 from aiogram import Bot, Dispatcher, executor, exceptions
 
 
+# Init bot and dispatcher
+bot = Bot(token=settings.TELEGRAM_API_TOKEN)
+dp = Dispatcher(bot)
+
+
 async def daily_update() -> None:
     # TODO: Notify all users
     for i in range(2):
@@ -27,9 +32,5 @@ async def send_message(chat_id: int, message: str) -> None:
         logging.exception(f'Target [ID:{chat_id}]: {str(e)}.')
 
 
-# Initialize bot
-bot = Bot(token=settings.TELEGRAM_API_TOKEN)
-dp = Dispatcher(bot)
-
-if __name__ == '__main__':
-    executor.start(dp, daily_update())
+# Send messages
+executor.start(dp, daily_update())
