@@ -1,4 +1,4 @@
-from neo4j import Driver, Session, Transaction, BoltStatementResult
+from neo4j import Transaction, BoltStatementResult
 
 
 def get_referrer(tx: Transaction, chatID: int) -> str:
@@ -16,8 +16,8 @@ def create_node(tx: Transaction, chatID: int) -> str:
                     chatID: $chatID,
                     referrer: apoc.create.uuid(),
                     infectedFromDate: date(),
-                    infectedUntil: date(datetime({ 
-                        epochmillis:timestamp()+1000*60*60*24*7 
+                    infectedUntil: date(datetime({
+                        epochmillis:timestamp()+1000*60*60*24*7
                     }))
                 })
                 RETURN newUser.referrer
@@ -26,14 +26,17 @@ def create_node(tx: Transaction, chatID: int) -> str:
     return result
 
 
-def create_node_from(tx: Transaction, chatID: int, referrer: str) -> BoltStatementResult:
+def create_node_from(tx: Transaction, chatID: int,
+                     referrer: str) -> BoltStatementResult:
     query = """
                 MATCH (infector:Person { referrer: $referrer })
                 CREATE (infector)-[:INFECTED]->(newUser:Person {
                     chatID: $chatID,
                     referrer: apoc.create.uuid(),
-                    infectedFromDate: date(), 
-                    infectedUntil: date(datetime({epochmillis:timestamp()+1000*60*60*24*7}))
+                    infectedFromDate: date(),
+                    infectedUntil: date(datetime({
+                        epochmillis:timestamp()+1000*60*60*24*7
+                    }))
                 })
                 RETURN newUser.referrer
             """

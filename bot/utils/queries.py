@@ -1,4 +1,4 @@
-from neo4j import Driver, Session, Transaction, BoltStatementResult
+from neo4j import Driver, Session, BoltStatementResult
 from neobolt.exceptions import ConstraintError
 import utils.transactions as transactions
 
