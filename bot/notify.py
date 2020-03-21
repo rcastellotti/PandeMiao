@@ -14,7 +14,8 @@ async def daily_update() -> None:
 
 async def send_message(chat_id: int, message: str) -> None:
     try:
-        await bot.send_message(chat_id=chat_id, text=message, disable_notification=True)
+        await bot.send_message(chat_id=chat_id,
+                               text=message, disable_notification=True)
         await asyncio.sleep(1.0)  # Max 1 message / sec
 
     except (exceptions.BotBlocked,
