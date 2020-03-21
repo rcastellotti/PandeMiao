@@ -27,6 +27,7 @@ def set_infected_from(driver: Driver, chatID: int, referrer: str) -> str:
                 transactions.create_node_from, chatID, referrer)
 
             if result_st is None:
+                # If the referrer is not valid, just be the patient zero
                 result: str = session.write_transaction(
                     transactions.create_node, chatID)
             else:
