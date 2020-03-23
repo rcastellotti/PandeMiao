@@ -15,10 +15,7 @@ def create_node(tx: Transaction, chatID: int) -> str:
                 CREATE (newUser:Person {
                     chatID: $chatID,
                     referrer: apoc.create.uuid(),
-                    infectedFromDate: date(),
-                    infectedUntil: date(datetime({
-                        epochmillis:timestamp()+1000*60*60*24*7
-                    }))
+                    infectedFromDate: date()
                 })
                 RETURN newUser.referrer
             """
@@ -33,10 +30,7 @@ def create_node_from(tx: Transaction, chatID: int,
                 CREATE (infector)-[:INFECTED]->(newUser:Person {
                     chatID: $chatID,
                     referrer: apoc.create.uuid(),
-                    infectedFromDate: date(),
-                    infectedUntil: date(datetime({
-                        epochmillis:timestamp()+1000*60*60*24*7
-                    }))
+                    infectedFromDate: date()
                 })
                 RETURN newUser.referrer
             """

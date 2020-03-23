@@ -31,8 +31,8 @@ async def start_handler(message: types.Message) -> None:
 
     try:
         await message.reply('Hey, sono una miaolattia pericolosa 😼\n' +
-                            'Hai 7 giorni per contagiare i tuoi (a)mici ' +
-                            'inviandogli questo link:\n' +
+                            'Per contagiare i tuoi (a)mici ' +
+                            'inviagli questo link:\n' +
                             start_link)
     except exceptions.TelegramAPIError as e:
         logging.exception(f'Target [ID:{from_chatID}]: {str(e)}.')
