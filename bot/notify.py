@@ -29,10 +29,10 @@ async def send_message(chat_id: int, message: str) -> None:
     except (exceptions.BotBlocked,
             exceptions.UserDeactivated,
             exceptions.ChatNotFound):
-        logging.debug(f'Target [ID:{chat_id}]: Impossible to reach him.')
+        logging.debug('Target [ID:%s]: Impossible to reach him.', chat_id)
 
     except exceptions.TelegramAPIError as exc:
-        logging.exception(f'Target [ID:{chat_id}]: {str(exc)}.')
+        logging.exception('Target [ID:%s]: %s.', chat_id, str(exc))
 
 
 # Send messages

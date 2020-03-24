@@ -37,7 +37,7 @@ async def start_handler(message: types.Message) -> None:
                             'inviagli questo link:\n' +
                             start_link)
     except exceptions.TelegramAPIError as exc:
-        logging.exception(f'Target [ID:{from_chat_id}]: {str(exc)}.')
+        logging.exception(f'Target [ID:%s]: %s.', from_chat_id, str(exc))
 
 
 @DP.message_handler(commands=['victims'])  # type: ignore
