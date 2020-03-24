@@ -7,10 +7,10 @@ from neo4j import Driver
 class TestQueries(unittest.TestCase):
     db: Driver
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.db = db_connect(retry=5, wait_sec=5)
 
-    def test_set_infected(self):
+    def test_set_infected(self) -> None:
         # Creation of a node
         referrer = utils.queries.set_infected(self.db, 0)
         self.assertIsNotNone(referrer)
@@ -25,7 +25,7 @@ class TestQueries(unittest.TestCase):
         self.assertIsNotNone(referrer_diff)
         self.assertNotEqual(referrer, referrer_diff)
 
-    def test_set_infected_from(self):
+    def test_set_infected_from(self) -> None:
         # Creation of the patient zero
         patient_zero_referrer = utils.queries.set_infected(self.db, 0)
         self.assertIsNotNone(patient_zero_referrer)
@@ -53,12 +53,13 @@ class TestQueries(unittest.TestCase):
         self.assertIsNotNone(wrong_linked)
         self.assertEqual(wrong_referral, wrong_linked)
 
-        # If a node exist, it is a patient zero and we try to infect it, nothing happens
+        # If a node exist, it is a patient zero
+        # and we try to infect it, nothing happens
         no_referred = utils.queries.set_infected(self.db, 1)
         self.assertIsNotNone(no_referred)
         self.assertEqual(referred_infected, no_referred)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         with self.db.session() as session:
             # Clean the DB
             session.run("""
