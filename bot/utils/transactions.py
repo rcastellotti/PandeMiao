@@ -27,11 +27,11 @@ def create_node_from(tx: Transaction, chatID: int,
                      referrer: str) -> BoltStatementResult:
     query = """
                 MATCH (infector:Person { referrer: $referrer })
-                CREATE (infector)-[:INFECTED]->(newUser:Person {
+                CREATE (newUser:Person {
                     chatID: $chatID,
                     referrer: apoc.create.uuid(),
                     infectedFromDate: date()
-                })
+                }), (infector)-[:INFECTED]->(newUser)
                 RETURN newUser.referrer
             """
     result: BoltStatementResult = tx.run(
