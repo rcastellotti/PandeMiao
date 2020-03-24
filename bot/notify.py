@@ -19,6 +19,8 @@ async def daily_update() -> None:
 
 
 async def send_message(chat_id: int, message: str) -> None:
+    '''Send a message to a single user.'''
+
     try:
         await BOT.send_message(chat_id=chat_id,
                                text=message, disable_notification=True)

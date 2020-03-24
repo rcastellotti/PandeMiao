@@ -4,6 +4,8 @@ from neo4j import Transaction, BoltStatementResult
 
 
 def get_referrer(txn: Transaction, chat_id: int) -> str:
+    '''Get referrer of a user.'''
+
     query = """
                 MATCH (user:Person { chatID: $chat_id })
                 RETURN user.referrer
@@ -13,6 +15,8 @@ def get_referrer(txn: Transaction, chat_id: int) -> str:
 
 
 def create_node(thx: Transaction, chat_id: int) -> str:
+    '''Create a patient zero in the DB.'''
+
     query = """
                 CREATE (newUser:Person {
                     chatID: $chat_id,
@@ -27,6 +31,8 @@ def create_node(thx: Transaction, chat_id: int) -> str:
 
 def create_node_from(thx: Transaction, chat_id: int,
                      referrer: str) -> BoltStatementResult:
+    '''Create an infected in the DB.'''
+
     query = """
                 MATCH (infector:Person { referrer: $referrer })
                 CREATE (newUser:Person {
