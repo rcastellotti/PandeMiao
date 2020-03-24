@@ -23,5 +23,5 @@ def db_connect(retry: int, wait_sec: float) -> Driver:
             raise exc
 
         time.sleep(wait_sec)
-        logging.info(f'DB []: Service Unavailable. Trying to reconnect...')
+        logging.info('DB []: Service Unavailable. Trying to reconnect...')
         return db_connect(retry-1, wait_sec)
