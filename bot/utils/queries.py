@@ -16,8 +16,8 @@ def set_infected(driver: Driver, chat_id: int) -> str:
             # The user already exist, just return its referrer
             result = session.read_transaction(
                 transactions.get_referrer, chat_id)
-        finally:
-            return result
+
+        return result
 
 
 def set_infected_from(driver: Driver, chat_id: int, referrer: str) -> str:
@@ -39,5 +39,5 @@ def set_infected_from(driver: Driver, chat_id: int, referrer: str) -> str:
             # The user already exist, just return its referrer
             result = session.read_transaction(
                 transactions.get_referrer, chat_id)
-        finally:
-            return result
+
+        return result
