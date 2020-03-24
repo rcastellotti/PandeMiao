@@ -26,7 +26,7 @@ def set_infected_from(driver: Driver, chatID: int, referrer: str) -> str:
             result_st: BoltStatementResult = session.write_transaction(
                 transactions.create_node_from, chatID, referrer)
 
-            if result_st is None:
+            if result_st.peek() is None:
                 # If the referrer is not valid, just be the patient zero
                 result = session.write_transaction(
                     transactions.create_node, chatID)
