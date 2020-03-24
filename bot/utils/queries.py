@@ -1,41 +1,43 @@
+'''Wrappers to interact with the DB.'''
+
 from neo4j import Driver, Session, BoltStatementResult
 from neobolt.exceptions import ConstraintError
 import utils.transactions as transactions
 
 
-def set_infected(driver: Driver, chatID: int) -> str:
+def set_infected(driver: Driver, chat_id: int) -> str:
     session: Session
     with driver.session() as session:
         result: str
         try:
             result = session.write_transaction(
-                transactions.create_node, chatID)
+                transactions.create_node, chat_id)
         except ConstraintError:
             # The user already exist, just return its referrer
             result = session.read_transaction(
-                transactions.get_referrer, chatID)
+                transactions.get_referrer, chat_id)
         finally:
             return result
 
 
-def set_infected_from(driver: Driver, chatID: int, referrer: str) -> str:
+def set_infected_from(driver: Driver, chat_id: int, referrer: str) -> str:
     session: Session
     with driver.session() as session:
         result: str
         try:
             result_st: BoltStatementResult = session.write_transaction(
-                transactions.create_node_from, chatID, referrer)
+                transactions.create_node_from, chat_id, referrer)
 
             if result_st.peek() is None:
                 # If the referrer is not valid, just be the patient zero
                 result = session.write_transaction(
-                    transactions.create_node, chatID)
+                    transactions.create_node, chat_id)
             else:
                 result = result_st.single().value()
 
         except ConstraintError:
             # The user already exist, just return its referrer
             result = session.read_transaction(
-                transactions.get_referrer, chatID)
+                transactions.get_referrer, chat_id)
         finally:
             return result

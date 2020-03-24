@@ -1,11 +1,13 @@
+'''Drop and create constraints during migrations.'''
+
 from neo4j import Driver, BoltStatementResult
 
 
-def migrate(db: Driver) -> None:
+def migrate(db_link: Driver) -> None:
     constraints_to_keep = []
 
     # Get constraints on the DB
-    with db.session() as session:
+    with db_link.session() as session:
         db_constraints: BoltStatementResult = session.run("""
                                      CALL db.constraints
                                      YIELD name
@@ -15,7 +17,7 @@ def migrate(db: Driver) -> None:
     # Create new constraints
     constraint_to_keep = 'chatID'
     if constraint_to_keep not in all_constraints:
-        with db.session() as session:
+        with db_link.session() as session:
             session.run(f"""
                         CREATE CONSTRAINT {constraint_to_keep}
                         ON (n:Person)
@@ -25,7 +27,7 @@ def migrate(db: Driver) -> None:
 
     constraint_to_keep = 'referrer'
     if constraint_to_keep not in all_constraints:
-        with db.session() as session:
+        with db_link.session() as session:
             session.run(f"""
                         CREATE CONSTRAINT {constraint_to_keep}
                         ON (n:Person)
@@ -36,5 +38,5 @@ def migrate(db: Driver) -> None:
     # Drop unused ones
     db_constraints_to_drop = set(all_constraints) - set(constraints_to_keep)
     for constraint_name in db_constraints_to_drop:
-        with db.session() as session:
+        with db_link.session() as session:
             session.run('DROP CONSTRAINT ' + constraint_name)

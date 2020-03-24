@@ -1,12 +1,13 @@
-import settings
+'''Notify users of how many people they have infected.'''
+
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, executor, exceptions
-
+import settings
 
 # Init bot and dispatcher
-bot = Bot(token=settings.TELEGRAM_API_TOKEN)
-dp = Dispatcher(bot)
+BOT = Bot(token=settings.TELEGRAM_API_TOKEN)
+DP = Dispatcher(BOT)
 
 
 async def daily_update() -> None:
@@ -19,7 +20,7 @@ async def daily_update() -> None:
 
 async def send_message(chat_id: int, message: str) -> None:
     try:
-        await bot.send_message(chat_id=chat_id,
+        await BOT.send_message(chat_id=chat_id,
                                text=message, disable_notification=True)
         await asyncio.sleep(1.0)  # Max 1 message / sec
 
@@ -28,9 +29,9 @@ async def send_message(chat_id: int, message: str) -> None:
             exceptions.ChatNotFound):
         logging.debug(f'Target [ID:{chat_id}]: Impossible to reach him.')
 
-    except exceptions.TelegramAPIError as e:
-        logging.exception(f'Target [ID:{chat_id}]: {str(e)}.')
+    except exceptions.TelegramAPIError as exc:
+        logging.exception(f'Target [ID:{chat_id}]: {str(exc)}.')
 
 
 # Send messages
-executor.start(dp, daily_update())
+executor.start(DP, daily_update())

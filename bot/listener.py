@@ -1,31 +1,33 @@
-import settings
+'''Handler of incoming messages.'''
+
 import logging
-import utils.queries as queries
-from utils.dbinit import db_connect
 from aiogram import Bot, Dispatcher, executor, types, exceptions
 from aiogram.utils.deep_linking import get_start_link
 from neo4j import Driver
+import settings
+import utils.queries as queries
+from utils.dbinit import db_connect
 
 
 # Init the db
-db: Driver = db_connect(retry=5, wait_sec=5)
+DB: Driver = db_connect(retry=5, wait_sec=5)
 
 # Init bot and dispatcher
-bot = Bot(token=settings.TELEGRAM_API_TOKEN)
-dp = Dispatcher(bot)
+BOT = Bot(token=settings.TELEGRAM_API_TOKEN)
+DP = Dispatcher(BOT)
 
 
 # Handlers
-@dp.message_handler(commands=['start'])  # type: ignore
+@DP.message_handler(commands=['start'])  # type: ignore
 async def start_handler(message: types.Message) -> None:
-    from_chatID = message.from_user.id
+    from_chat_id = message.from_user.id
     start_referrer = message.get_args()
 
     if not start_referrer:
-        new_referrer = queries.set_infected(db, from_chatID)
+        new_referrer = queries.set_infected(DB, from_chat_id)
     else:
         new_referrer = queries.set_infected_from(
-            db, from_chatID, start_referrer)
+            DB, from_chat_id, start_referrer)
 
     start_link: str = await get_start_link(new_referrer)
 
@@ -34,27 +36,27 @@ async def start_handler(message: types.Message) -> None:
                             'Per contagiare i tuoi (a)mici ' +
                             'inviagli questo link:\n' +
                             start_link)
-    except exceptions.TelegramAPIError as e:
-        logging.exception(f'Target [ID:{from_chatID}]: {str(e)}.')
+    except exceptions.TelegramAPIError as exc:
+        logging.exception(f'Target [ID:{from_chat_id}]: {str(exc)}.')
 
 
-@dp.message_handler(commands=['victims'])  # type: ignore
+@DP.message_handler(commands=['victims'])  # type: ignore
 async def victims_handler(message: types.Message) -> None:
     await message.reply('Non hai ancora contagiatto nessuno 🐈')
 
 
-@dp.message_handler(commands=['dumpmydata'])  # type: ignore
+@DP.message_handler(commands=['dumpmydata'])  # type: ignore
 async def dumpmydata_handler(message: types.Message) -> None:
     await message.reply('Come pretendi un gatto conosca qualcosa di te? 😺')
 
 
-@dp.message_handler(commands=['forgetaboutme'])  # type: ignore
+@DP.message_handler(commands=['forgetaboutme'])  # type: ignore
 async def forgetaboutme_handler(message: types.Message) -> None:
     await message.reply("Don't you, forget about me \n"
                         "Don't, don't, don't, don't  😿")
 
 
-@dp.message_handler(commands=['help'])  # type: ignore
+@DP.message_handler(commands=['help'])  # type: ignore
 async def help_handler(message: types.Message) -> None:
     await message.reply('Hey ciao! Sono PandeMiao, '
                         'un progetto tutto open '
@@ -65,5 +67,5 @@ async def help_handler(message: types.Message) -> None:
 
 
 # Wait messages and close the db at the end
-executor.start_polling(dp, skip_updates=False)
-db.close()
+executor.start_polling(DP, skip_updates=False)
+DB.close()
