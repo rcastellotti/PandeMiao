@@ -1,5 +1,8 @@
 '''Test module utils.queries.'''
 
+# pylint: disable=C0116
+# pylint: disable=C0115
+
 import unittest
 from neo4j import Driver
 from utils.dbinit import db_connect

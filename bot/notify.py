@@ -11,6 +11,7 @@ DP = Dispatcher(BOT)
 
 
 async def daily_update() -> None:
+    '''Send each user some stats.'''
     # TODO: Notify all users
     for i in range(2):
         chat_id = 844457200

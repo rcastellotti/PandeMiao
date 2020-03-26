@@ -3,6 +3,7 @@
 from neo4j import Driver, BoltStatementResult
 
 
+# pylint: disable=C0116
 def migrate(db_link: Driver) -> None:
     constraints_to_keep = []
 

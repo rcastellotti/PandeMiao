@@ -1,5 +1,7 @@
 '''Wrappers to interact with the DB.'''
 
+# pylint: disable=C0116
+
 from neo4j import Driver, Session, BoltStatementResult
 from neobolt.exceptions import ConstraintError
 import utils.transactions as transactions

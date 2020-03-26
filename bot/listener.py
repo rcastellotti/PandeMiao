@@ -18,6 +18,7 @@ DP = Dispatcher(BOT)
 
 
 # Handlers
+# pylint: disable=C0116
 @DP.message_handler(commands=['start'])  # type: ignore
 async def start_handler(message: types.Message) -> None:
     from_chat_id = message.from_user.id
@@ -40,22 +41,26 @@ async def start_handler(message: types.Message) -> None:
         logging.exception('Target [ID:%s]: %s.', from_chat_id, str(exc))
 
 
+# pylint: disable=C0116
 @DP.message_handler(commands=['victims'])  # type: ignore
 async def victims_handler(message: types.Message) -> None:
     await message.reply('Non hai ancora contagiatto nessuno 🐈')
 
 
+# pylint: disable=C0116
 @DP.message_handler(commands=['dumpmydata'])  # type: ignore
 async def dumpmydata_handler(message: types.Message) -> None:
     await message.reply('Come pretendi un gatto conosca qualcosa di te? 😺')
 
 
+# pylint: disable=C0116
 @DP.message_handler(commands=['forgetaboutme'])  # type: ignore
 async def forgetaboutme_handler(message: types.Message) -> None:
     await message.reply("Don't you, forget about me \n"
                         "Don't, don't, don't, don't  😿")
 
 
+# pylint: disable=C0116
 @DP.message_handler(commands=['help'])  # type: ignore
 async def help_handler(message: types.Message) -> None:
     await message.reply('Hey ciao! Sono PandeMiao, '
