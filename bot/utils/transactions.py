@@ -3,6 +3,17 @@
 from neo4j import Transaction, BoltStatementResult
 
 
+def get_infector(txn: Transaction, chat_id: int) -> str:
+    '''Get chatID of the infector'''
+
+    query = """
+                MATCH (infector:Person)-[]->(:Person { chatID: $chat_id })
+                RETURN infector.chatID
+            """
+    result: str = txn.run(query, chat_id=chat_id).single().value()
+    return result
+
+
 def get_referrer(txn: Transaction, chat_id: int) -> str:
     '''Get referrer of a user.'''
 

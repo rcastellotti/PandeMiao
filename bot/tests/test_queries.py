@@ -3,6 +3,7 @@
 import unittest
 from neo4j import Driver
 from utils.dbinit import db_connect
+import utils.transactions
 import utils.queries
 
 
@@ -54,6 +55,18 @@ class TestQueries(unittest.TestCase):
             self.db_link, 2, patient_zero_referrer)
         self.assertIsNotNone(wrong_linked)
         self.assertEqual(wrong_referral, wrong_linked)
+
+        # If a node exist and we try to re-infect it,
+        # it souldn't change the infector
+        ref_init = utils.queries.set_infected(self.db_link, 3)
+        ref_post = utils.queries.set_infected(self.db_link, 4)
+        utils.queries.set_infected_from(self.db_link, 5, ref_init)
+        utils.queries.set_infected_from(self.db_link, 5, ref_post)
+        with self.db_link.session() as session:
+            result = session.read_transaction(
+                utils.transactions.get_infector, 5)
+        self.assertEqual(result, 3)
+        self.assertNotEqual(result, 4)
 
         # If a node exist, it is a patient zero
         # and we try to infect it, nothing happens
