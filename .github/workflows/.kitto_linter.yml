@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Purring and buying statically typed corn-flakes
-        run: pip install flake8 mypy
+        run: pip install flake8 mypy pylint
 
       - name: Kitto is checking types
         working-directory: ./bot
