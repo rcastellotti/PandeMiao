@@ -2,29 +2,31 @@ name: kitto_linter
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    
-    - name: Checking requirements.txt is ok
-      run: |
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Checking requirements.txt is ok
+        run: |
           python -m pip install --upgrade pip 
           pip install -r requirements.txt
 
-    - name: Purring and buying statically typed corn-flakes
-      run: pip install flake8 mypy
-      
-    - name: Kitto is linting and checking types
-      run: flake8 . && mypy bot/ --strict
+      - name: Purring and buying statically typed corn-flakes
+        run: pip install flake8 mypy
 
-    
+      - name: Kitto is checking types
+        working-directory: ./bot
+        run: mypy notify.py listener.py tests/ --strict --follow-imports normal --config-file ../setup.cfg
+
+      - name: Kitto is linting
+        run: flake8 .
