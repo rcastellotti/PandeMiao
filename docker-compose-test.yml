@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  pandemiao-test:
+    build: .
+    links:
+      - pandemiao-db
+    environment:
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=password
+      - NEO4J_URI=bolt://pandemiao-db
+      - NEO4J_ENCRYPTED=Off
+    env_file: .env
+    command: ["bash", "-c", "cd /opt/bot && python -m unittest"]
+
+
