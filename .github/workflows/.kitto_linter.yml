@@ -30,3 +30,7 @@ jobs:
 
       - name: Kitto is linting
         run: flake8 .
+
+      - name: Kitto is py-linting
+        working-directory: ./bot
+        run: pylint listener.py notify.py utils/ tests/
