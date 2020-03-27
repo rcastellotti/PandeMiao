@@ -1,5 +1,5 @@
 # PandeMiao
-Gotta kill 'em all
+Gotta meow meow 'em all
 
 Simula una pandemia: contagia gli altri finché sei malato e scopri quante persone sono state contagiate per colpa tua!
 
