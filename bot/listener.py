@@ -60,8 +60,39 @@ async def dumpmydata_handler(message: types.Message) -> None:
 async def forgetaboutme_handler(message: types.Message) -> None:
     '''Ask you to confirm the removal of your data.'''
 
-    await message.reply("Don't you, forget about me \n"
-                        "Don't, don't, don't, don't  😿")
+    keyboard = types.InlineKeyboardMarkup(row_width=2)
+    keyboard.row(
+        types.InlineKeyboardButton('No', callback_data='forgetaboutme:no'),
+        types.InlineKeyboardButton("Si", callback_data='forgetaboutme:yes')
+    )
+
+    await message.reply('Non voglio dimenticarti 😿\n' +
+                        'Se vuoi solo smettere di ricevere le notifiche, ' +
+                        'cancella questa chat.\n' +
+                        'Sei sicuro di voler cancellare i tuoi dati? ' +
+                        'Tutti i tuoi progressi andranno persi',
+                        reply_markup=keyboard)
+
+
+@DP.callback_query_handler(text='forgetaboutme:no')  # type: ignore
+async def forgetaboutme_no_handler(
+        query: types.CallbackQuery) -> None:
+    '''Remove messages if you don't want to delete data.'''
+
+    await query.answer()
+    await BOT.delete_message(query.from_user.id,
+                             query.message.message_id)
+    await BOT.delete_message(query.from_user.id,
+                             query.message.reply_to_message.message_id)
+
+
+@DP.callback_query_handler(text='forgetaboutme:yes')  # type: ignore
+async def forgetaboutme_yes_handler(query: types.CallbackQuery) -> None:
+    '''Delete your personal data.'''
+
+    await query.answer()
+    # TODO: Anonimyze data
+    await BOT.send_message(query.from_user.id, ':( Adieu')
 
 
 @DP.message_handler(commands=['help'])  # type: ignore
