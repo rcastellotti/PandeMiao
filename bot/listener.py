@@ -80,10 +80,12 @@ async def forgetaboutme_no_handler(
     '''Remove messages if you don't want to delete data.'''
 
     await query.answer()
+
+    if query.message.reply_to_message is not None:
+        await BOT.delete_message(query.from_user.id,
+                                 query.message.reply_to_message.message_id)
     await BOT.delete_message(query.from_user.id,
                              query.message.message_id)
-    await BOT.delete_message(query.from_user.id,
-                             query.message.reply_to_message.message_id)
 
 
 @DP.callback_query_handler(text='forgetaboutme:yes')  # type: ignore
