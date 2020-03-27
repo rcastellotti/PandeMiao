@@ -44,9 +44,9 @@ jobs:
         run: cp .env.example .env
       
       - name: Moby-Kitto loves water
-	run: docker-compose build	
+	      run: docker-compose build	
 
        -name: Moby-Kitto ain't scared of tests
-	run: sudo docker-compose -f docker-compose.yml -f docker-compose-test.yml up -d pandemiao-db && docker-compose -f docker-compose.yml -f docker-compose-test.yml up  pandemiao-test
+      	run: sudo docker-compose -f docker-compose.yml -f docker-compose-test.yml up -d pandemiao-db && docker-compose -f docker-compose.yml -f docker-compose-test.yml up  pandemiao-test
 
 
