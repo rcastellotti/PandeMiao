@@ -1,10 +1,11 @@
-'''Drop and create constraints during migrations.'''
+'''Manage migrations between different code versions.'''
 
 from neo4j import Driver, BoltStatementResult
 
 
-# pylint: disable=C0116
-def migrate(db_link: Driver) -> None:
+def migrate_db(db_link: Driver) -> None:
+    '''Drop and create constraints during the migration.'''
+
     constraints_to_keep = []
 
     # Get constraints on the DB

@@ -16,7 +16,7 @@ def db_connect(retry: int, wait_sec: float) -> Driver:
         db_link = GraphDatabase.driver(settings.NEO4J_URI,
                                        auth=db_auth,
                                        encrypted=settings.NEO4J_ENCRYPTED)
-        dbmigration.migrate(db_link)
+        dbmigration.migrate_db(db_link)
         return db_link
     except ServiceUnavailable as exc:
         if retry == 0:

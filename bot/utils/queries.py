@@ -1,13 +1,13 @@
 '''Wrappers to interact with the DB.'''
 
-# pylint: disable=C0116
-
 from neo4j import Driver, Session, BoltStatementResult
 from neobolt.exceptions import ConstraintError
 import utils.transactions as transactions
 
 
 def set_infected(driver: Driver, chat_id: int) -> str:
+    '''Create a patient zero in the DB if doesn't exist.'''
+
     session: Session
     with driver.session() as session:
         result: str
@@ -23,6 +23,8 @@ def set_infected(driver: Driver, chat_id: int) -> str:
 
 
 def set_infected_from(driver: Driver, chat_id: int, referrer: str) -> str:
+    '''Create an infected in the DB if doesn't exist.'''
+
     session: Session
     with driver.session() as session:
         result: str
